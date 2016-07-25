@@ -6,12 +6,12 @@ class SsesController < ApplicationController
 
   def stream
     response.headers['Content-Type'] = 'text/event-stream'
-    sse = SSE.new(response.stream)
+    sse = SSE.new(response.stream, event: 'progress')
     100.times do |i|
-      sse.write(i.to_s, event: 'progress')
+      sse.write(i.to_s)
       sleep 1
     end
-    sse.write('done', event: 'done')
+    sse.write('done')
   ensure
     sse.close
   end

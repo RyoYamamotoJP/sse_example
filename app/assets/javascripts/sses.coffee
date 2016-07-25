@@ -5,8 +5,5 @@
 $ ->
   $progress = $('#sses #progress')
   eventSource = new EventSource '/sses/stream'
-  eventSource.addEventListener 'progress', (event) ->
-    $progress.text event.data
-  eventSource.addEventListener 'done', (event) =>
-    $progress.text event.data
-    this.close()
+  eventSource.addEventListener 'progress', (event) -> $progress.text event.data
+  eventSource.addEventListener 'error', (event) -> eventSource.close()
